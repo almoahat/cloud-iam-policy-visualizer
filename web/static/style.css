@@ -1,1 +1,34 @@
-body { font-family: sans-serif; padding: 2em; }
+body {
+    font-family: Arial, sans-serif;
+    padding: 2rem;
+    background-color: #f9f9f9;
+  }
+  
+  form {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background: #fff;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #004999;
+  }
+  
+  .mermaid {
+    background: #fff;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    margin-top: 1rem;
+    border-radius: 6px;
+  }
+  

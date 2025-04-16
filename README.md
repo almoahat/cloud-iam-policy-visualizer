@@ -1,12 +1,20 @@
-# Cloud IAM Policy Visualizer
 
-Visualize AWS IAM policies using Python + Flask.
+## 🔐 Cloud IAM Policy Visualizer
 
-## Quick Start
+Visualize AWS IAM policies to quickly understand access relationships.
+
+### Features
+- Upload or fetch IAM JSON policies
+- Visual Mermaid.js graph rendering
+- Drag-and-drop UI
+- Error feedback and condition display
+
+### Technologies
+- Python, Flask, Mermaid.js, Boto3, HTML/CSS
+
+### Run Locally
 
 ```bash
-git clone <your repo>
-cd cloud-iam-policy-visualizer
 pip install -r requirements.txt
-python web/app.py
-```
+PYTHONPATH=. python web/app.py
+

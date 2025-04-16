@@ -1,12 +1,63 @@
 <!doctype html>
 <html>
-<head><title>IAM Visualizer</title></head>
+<head>
+  <title>IAM Policy Visualizer</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+    const dropZone = document.getElementById('drop-zone');
+    const hiddenFile = document.getElementById('hidden-file');
+
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.style.borderColor = '#0066cc';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.style.borderColor = '#ccc';
+    });
+
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file && file.name.endsWith('.json')) {
+        hiddenFile.files = e.dataTransfer.files;
+
+        // Auto-submit
+        const form = document.querySelector('form');
+        form.appendChild(hiddenFile);
+        form.submit();
+      }
+    });
+    document.querySelector("form").addEventListener("submit", () => {
+    document.getElementById("loading").style.display = "block";
+    });
+  </script>
+  <style>body { font-family: sans-serif; padding: 2em; }</style>
+</head>
 <body>
-<h1>Upload IAM Policy</h1>
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="policy_file">
-    <input type="submit" value="Visualize">
-</form>
-<div id="graph">Loading...</div>
+  <h1>IAM Policy Visualizer</h1>
+  {% if error %}
+    <p style="color: red">{{ error }}</p>
+  {% endif %}
+  <form method="POST" enctype="multipart/form-data">
+    <input type="file" name="policy_file" accept=".json" required />
+    <button type="submit">Visualize</button>
+    <div id="loading" style="display:none;">
+      <p>Loading…</p>
+    </div>
+  </form>
+  <h2>Or drag and drop your policy here:</h2>
+  <div id="drop-zone" style="border: 2px dashed #ccc; padding: 2rem; text-align: center;">
+    Drop JSON file here
+  </div>
+  <input type="file" id="hidden-file" name="policy_file" style="display: none;" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  {% if graph %}
+    <h2>Mermaid Graph</h2>
+    <pre class="mermaid">{{ graph | safe  }}</pre>
+  {% endif %}
 </body>
 </html>
